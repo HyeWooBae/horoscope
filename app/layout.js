@@ -1,4 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
+// cacheComponents 켤 때 필요 (next.config.mjs 참고)
+// import { Suspense } from "react";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,7 +22,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        {/* cacheComponents 켤 때: AntdRegistry의 Math.random()을 요청 시 렌더링으로 미루기 위해 <Suspense>로 감쌈 */}
+        {/* <Suspense> */}
+          <AntdRegistry>
+            <section>
+              {children}
+            </section>
+          </AntdRegistry>
+        {/* </Suspense> */}
+      </body>
     </html>
   );
 }
